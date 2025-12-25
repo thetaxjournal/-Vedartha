@@ -1,20 +1,42 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# Vedartha Enterprise ERP Deployment Guide
 
-This contains everything you need to run your app locally.
+This application is architected for high-performance deployment on Vercel.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1CJgc9RexWm21PKxDIugH9k6FifhLPGJ5
+## Deployment Steps
 
-## Run Locally
+### 1. Preparation
+Ensure you have a [Vercel account](https://vercel.com) and a [GitHub account](https://github.com).
 
-**Prerequisites:**  Node.js
+### 2. Version Control
+1. Initialize a git repository in your project folder:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial ERP Release v1.0"
+   ```
+2. Create a **Private** repository on GitHub.
+3. Push your code:
+   ```bash
+   git remote add origin https://github.com/your-username/your-repo-name.git
+   git branch -M main
+   git push -u origin main
+   ```
 
+### 3. Vercel Connection
+1. In Vercel dashboard, click **"Add New"** > **"Project"**.
+2. Select the repository you just pushed.
+3. Vercel will automatically detect **Vite** as the framework.
+4. Click **Deploy**.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 4. Custom Domain Setup
+1. Navigate to **Project Settings** > **Domains**.
+2. Add your domain (e.g., `billing.vedartha.com`).
+3. Vercel will provide an **A record** or **CNAME**.
+4. Log into your Domain Registrar (GoDaddy, Namecheap, etc.) and add that record to your DNS settings.
+5. Wait 5-10 minutes for SSL propagation.
+
+## System Security
+*   **Access**: Default credentials are `admin` / `admin`.
+*   **Backups**: Use the **System Config** module to download JSON backups regularly.
+*   **Infrastructure**: Hosted on Vercel's global Edge network for sub-100ms latency worldwide.
