@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Lock, User, ShieldCheck, ArrowRight } from 'lucide-react';
-import { LOGO_DARK_BG, COMPANY_NAME } from '../constants';
+import { COMPANY_LOGO } from '../constants';
 
 interface LoginProps {
   onLogin: (user: string, pass: string) => void;
@@ -30,13 +30,13 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       <div className="w-full max-w-[480px] z-10 p-4">
         <div className="bg-white rounded-[32px] shadow-[0_32px_128px_-16px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden">
           <div className="p-10 pb-6 text-center">
-            <div className="flex justify-center mb-8">
-              <div className="bg-[#1c2d3d] p-4 rounded-2xl shadow-xl">
-                <img src={LOGO_DARK_BG} alt="VEDARTHA" className="h-10 object-contain" />
-              </div>
+            <div className="flex justify-center mb-4">
+              <img 
+                src={COMPANY_LOGO} 
+                alt="VEDARTHA" 
+                className="h-16 object-contain"
+              />
             </div>
-            <h1 className="text-2xl font-black text-[#1c2d3d] tracking-tight uppercase">{COMPANY_NAME.split(' ')[0]} Enterprise</h1>
-            <p className="text-[10px] font-bold text-blue-500 mt-2 uppercase tracking-[0.3em]">Central Access Gateway</p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-10 pt-4 space-y-6">
@@ -95,7 +95,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
           <div className="p-8 bg-gray-50/50 border-t border-gray-100 text-center">
             <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-              Secured by Vedartha Global Infrastructure &copy; 2025
+              Secured by Vedartha System Solutions &copy; 2025
             </p>
           </div>
         </div>

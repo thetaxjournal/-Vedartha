@@ -220,7 +220,7 @@ const InvoiceCreation: React.FC<InvoiceCreationProps> = ({ branches, activeBranc
             <div className="flex"><span className="w-44 font-bold">Gstin of supplier</span><span className="w-4 text-center">:</span><span className="font-bold">{activeBranch?.gstin}</span></div>
             <div className="flex"><span className="w-44 font-bold align-top">Principal place of business</span><span className="w-4 text-center align-top">:</span>
               <div className="flex-1 font-medium leading-tight">
-                {activeBranch?.address.line1}, {activeBranch?.address.city} Urban, {activeBranch?.state || activeBranch?.address.state} - {activeBranch?.address.pincode}
+                {activeBranch?.address.line1}, {activeBranch?.address.city} Urban, {activeBranch?.address.state} - {activeBranch?.address.pincode}
               </div>
             </div>
           </div>

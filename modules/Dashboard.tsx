@@ -38,6 +38,13 @@ const Dashboard: React.FC<DashboardProps> = ({ invoices, clients, branches, paym
 
   const COLORS = ['#0854a0', '#10b981', '#f59e0b', '#ef4444'];
 
+  const colorVariants: Record<string, { bg: string; text: string; bgSoft: string }> = {
+    blue: { bg: 'bg-blue-50', text: 'text-blue-600', bgSoft: 'bg-blue-50' },
+    amber: { bg: 'bg-amber-50', text: 'text-amber-600', bgSoft: 'bg-amber-50' },
+    emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', bgSoft: 'bg-emerald-50' },
+    rose: { bg: 'bg-rose-50', text: 'text-rose-600', bgSoft: 'bg-rose-50' },
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Premium Header Branding */}
@@ -78,27 +85,30 @@ const Dashboard: React.FC<DashboardProps> = ({ invoices, clients, branches, paym
           { label: 'Receivable Assets', value: `₹ ${receivableValue.toLocaleString('en-IN')}`, trend: receivableCount.toString(), icon: Clock, color: 'amber', sub: 'Open Vouchers' },
           { label: 'Partner Network', value: clients.length.toString(), trend: 'Verified', icon: Users, color: 'emerald', sub: 'Active Entities' },
           { label: 'Compliance Status', value: 'High', trend: 'Audit Pass', icon: ShieldCheck, color: 'rose', sub: 'Risk Assessment' },
-        ].map((stat, idx) => (
-          <div key={idx} className="bg-white p-7 rounded-[28px] border border-gray-100 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden">
-            <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 bg-${stat.color}-50 rounded-full opacity-40 group-hover:scale-150 transition-transform duration-700`}></div>
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-4">
-                <div className={`p-3 rounded-2xl bg-${stat.color}-50 text-${stat.color}-600 group-hover:bg-[#003366] group-hover:text-white transition-all`}>
-                  <stat.icon size={20} />
+        ].map((stat, idx) => {
+          const styles = colorVariants[stat.color] || colorVariants.blue;
+          return (
+            <div key={idx} className="bg-white p-7 rounded-[28px] border border-gray-100 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden">
+              <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 ${styles.bgSoft} rounded-full opacity-40 group-hover:scale-150 transition-transform duration-700`}></div>
+              <div className="relative z-10">
+                <div className="flex justify-between items-start mb-4">
+                  <div className={`p-3 rounded-2xl ${styles.bg} ${styles.text} group-hover:bg-[#003366] group-hover:text-white transition-all`}>
+                    <stat.icon size={20} />
+                  </div>
+                  {idx === 0 && <ArrowUpRight size={18} className="text-emerald-500" />}
                 </div>
-                {idx === 0 && <ArrowUpRight size={18} className="text-emerald-500" />}
-              </div>
-              <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] mb-1">{stat.label}</p>
-              <h3 className="text-2xl font-black text-[#003366] tracking-tighter">{stat.value}</h3>
-              <div className="mt-4 flex items-center justify-between">
-                <span className={`text-[10px] font-black uppercase tracking-wider ${idx === 3 ? 'text-blue-500' : 'text-emerald-500'}`}>
-                  {stat.trend}
-                </span>
-                <span className="text-[9px] font-bold text-gray-300 uppercase tracking-tighter">{stat.sub}</span>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] mb-1">{stat.label}</p>
+                <h3 className="text-2xl font-black text-[#003366] tracking-tighter">{stat.value}</h3>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className={`text-[10px] font-black uppercase tracking-wider ${idx === 3 ? 'text-blue-500' : 'text-emerald-500'}`}>
+                    {stat.trend}
+                  </span>
+                  <span className="text-[9px] font-bold text-gray-300 uppercase tracking-tighter">{stat.sub}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Analytical Visuals */}

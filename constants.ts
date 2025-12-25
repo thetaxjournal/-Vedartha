@@ -38,34 +38,7 @@ export const INITIAL_BRANCHES: Branch[] = [
   }
 ];
 
-export const INITIAL_CLIENTS: Client[] = [
-  {
-    id: 'c1',
-    name: 'ADOBE Systems India Private Limited',
-    contactPerson: 'Mr. Apurva Vats',
-    email: 'billing@adobe.com',
-    phone: '+91 98765 43210',
-    billingAddress: {
-      line1: 'BLOCK A PRESTIGE TECH PLATINA',
-      line2: 'KADUBEESANAHALLI VILLAGE, VARTHUR HOBLI',
-      city: 'BANGALORE',
-      state: 'KARNATAKA',
-      pincode: '560087',
-      country: 'INDIA'
-    },
-    shippingAddress: {
-      line1: 'BLOCK A PRESTIGE TECH PLATINA',
-      line2: 'KADUBEESANAHALLI VILLAGE, VARTHUR HOBLI',
-      city: 'BANGALORE',
-      state: 'KARNATAKA',
-      pincode: '560087',
-      country: 'INDIA'
-    },
-    gstin: '29AACCA2982J1ZE',
-    branchIds: ['B001'],
-    status: 'Active'
-  }
-];
+export const INITIAL_CLIENTS: Client[] = [];
 
 export const APP_CONFIG = {
   currency: 'INR',
