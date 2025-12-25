@@ -261,9 +261,6 @@ const InvoiceCreation: React.FC<InvoiceCreationProps> = ({ branches, activeBranc
               <p className="italic text-[8.5px] mt-1">{activeBranch?.name} is part of Vedartha International Limited Group.</p>
             </div>
           </div>
-          <div className="flex justify-end mt-2">
-            <span className="text-[10px] font-medium text-[#000000]">1 of 2</span>
-          </div>
         </div>
       </div>
 
@@ -309,7 +306,7 @@ const InvoiceCreation: React.FC<InvoiceCreationProps> = ({ branches, activeBranc
              <p>Branch office: {activeBranch?.address.line1}, {activeBranch?.address.city}, {activeBranch?.address.state} - {activeBranch?.address.pincode}</p>
           </div>
           <div className="flex justify-end mt-2">
-            <span className="text-[10px] font-medium">2 of 2</span>
+            <span className="text-[10px] font-medium">Page 2</span>
           </div>
         </div>
       </div>
