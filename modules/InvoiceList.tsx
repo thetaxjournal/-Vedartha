@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { Search, Plus, Filter, FileText, Download, Edit2, Ban, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { Search, Plus, Filter, FileText, Download, Edit2, Ban, CheckCircle, Clock, XCircle, MessageCircle } from 'lucide-react';
 import { Invoice } from '../types';
+import { COMPANY_NAME } from '../constants';
 
 interface InvoiceListProps {
   invoices: Invoice[];
@@ -17,6 +18,12 @@ const InvoiceList: React.FC<InvoiceListProps> = ({ invoices, onNewInvoice, onEdi
     inv.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
     inv.clientName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleWhatsAppShare = (inv: Invoice) => {
+    const text = `Dear ${inv.clientName},%0A%0APlease find attached Invoice *${inv.invoiceNumber}* dated ${inv.date}.%0A%0A*Total Amount:* ₹ ${inv.grandTotal.toLocaleString('en-IN')}%0A%0ARegards,%0A${COMPANY_NAME}`;
+    // Opens WhatsApp with the pre-filled text. User selects the contact.
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
@@ -80,6 +87,9 @@ const InvoiceList: React.FC<InvoiceListProps> = ({ invoices, onNewInvoice, onEdi
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end space-x-2">
+                      <button onClick={() => handleWhatsAppShare(inv)} className="p-2 text-green-500 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors" title="Share via WhatsApp">
+                        <MessageCircle size={14} />
+                      </button>
                       <button onClick={() => onEdit(inv)} className="p-2 text-gray-400 hover:text-blue-600 transition-colors" title="Edit">
                         <Edit2 size={14} />
                       </button>

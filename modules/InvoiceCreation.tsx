@@ -11,11 +11,12 @@ import {
   Printer,
   Download,
   EyeOff,
-  Calendar
+  Calendar,
+  MessageCircle
 } from 'lucide-react';
 import QRCode from 'react-qr-code';
 import { Branch, Client, InvoiceItem, Invoice } from '../types';
-import { COMPANY_LOGO, APP_CONFIG } from '../constants';
+import { COMPANY_LOGO, APP_CONFIG, COMPANY_NAME } from '../constants';
 
 const numberToWords = (num: number): string => {
   if (num === 0) return 'Zero';
@@ -110,6 +111,17 @@ const InvoiceCreation: React.FC<InvoiceCreationProps> = ({ branches, activeBranc
       setIsPrinting(false);
       document.title = originalTitle;
     }, 500);
+  };
+
+  const handleWhatsApp = () => {
+    if (!selectedClient) {
+      alert("Please select a client to generate the message.");
+      return;
+    }
+    const text = `Dear ${selectedClient.name},%0A%0APlease find attached Invoice *${invoiceNumber}* dated ${invoiceDate}.%0A%0A*Total Amount:* ₹ ${grandTotal.toLocaleString('en-IN')}%0A%0ARegards,%0A${COMPANY_NAME}`;
+    // Inform user they need to attach the PDF manually
+    alert("WhatsApp will open with the invoice details. Please remember to attach the PDF file you downloaded.");
+    window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 
   const InvoiceDocument = () => (
@@ -414,6 +426,9 @@ const InvoiceCreation: React.FC<InvoiceCreationProps> = ({ branches, activeBranc
           <div className="w-full max-w-[210mm] flex justify-between items-center mb-8 text-white px-4 no-print">
             <span className="text-[12px] font-bold tracking-tight">Document preview (A4)</span>
             <div className="flex space-x-4">
+              <button onClick={handleWhatsApp} className="flex items-center px-6 py-3.5 bg-green-600 text-white rounded-2xl text-[11px] font-bold transition-all shadow-xl hover:bg-green-500">
+                <MessageCircle size={18} className="mr-3" /> WhatsApp
+              </button>
               <button onClick={handleDownloadPDF} className="flex items-center px-8 py-3.5 bg-[#0854a0] text-white rounded-2xl text-[11px] font-bold transition-all shadow-xl">
                 <Download size={18} className="mr-3" /> Export to PDF
               </button>

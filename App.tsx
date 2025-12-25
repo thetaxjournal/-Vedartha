@@ -14,19 +14,63 @@ import Accounts from './modules/Accounts';
 import Settings from './modules/Settings';
 import Login from './components/Login';
 
+// Helper to load data from localStorage with a fallback
+const loadFromStorage = <T,>(key: string, fallback: T): T => {
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : fallback;
+  } catch (e) {
+    console.error(`Error loading key ${key} from storage`, e);
+    return fallback;
+  }
+};
+
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // Initialize state from localStorage or defaults
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => loadFromStorage('vedartha_auth', false));
   const [activeModule, setActiveModule] = useState<Module>('Dashboard');
-  const [branches, setBranches] = useState<Branch[]>(INITIAL_BRANCHES);
-  const [activeBranchId, setActiveBranchId] = useState<string>(branches[0].id);
-  const [clients, setClients] = useState<Client[]>(INITIAL_CLIENTS);
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [payments, setPayments] = useState<Payment[]>([]);
+  
+  const [branches, setBranches] = useState<Branch[]>(() => loadFromStorage('vedartha_branches', INITIAL_BRANCHES));
+  const [activeBranchId, setActiveBranchId] = useState<string>(() => {
+    const savedBranches = loadFromStorage('vedartha_branches', INITIAL_BRANCHES);
+    return savedBranches.length > 0 ? savedBranches[0].id : '';
+  });
+  
+  const [clients, setClients] = useState<Client[]>(() => loadFromStorage('vedartha_clients', INITIAL_CLIENTS));
+  const [invoices, setInvoices] = useState<Invoice[]>(() => loadFromStorage('vedartha_invoices', []));
+  const [payments, setPayments] = useState<Payment[]>(() => loadFromStorage('vedartha_payments', []));
+  
   const [showCreation, setShowCreation] = useState(false);
   const [editingInvoice, setEditingInvoice] = useState<Invoice | null>(null);
 
+  // Persist state changes to localStorage
+  useEffect(() => {
+    localStorage.setItem('vedartha_auth', JSON.stringify(isAuthenticated));
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    localStorage.setItem('vedartha_branches', JSON.stringify(branches));
+  }, [branches]);
+
+  useEffect(() => {
+    localStorage.setItem('vedartha_clients', JSON.stringify(clients));
+  }, [clients]);
+
+  useEffect(() => {
+    localStorage.setItem('vedartha_invoices', JSON.stringify(invoices));
+  }, [invoices]);
+
+  useEffect(() => {
+    localStorage.setItem('vedartha_payments', JSON.stringify(payments));
+  }, [payments]);
+
   const handleLogin = (user: string, pass: string) => {
     setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('vedartha_auth');
   };
 
   const handleUpdateClients = (newClients: Client[]) => {
@@ -166,6 +210,7 @@ const App: React.FC = () => {
           activeBranchId={activeBranchId}
           onBranchChange={setActiveBranchId}
           title={activeModule === 'Invoices' ? (showCreation ? (editingInvoice ? 'Edit Document' : 'Create Invoice') : 'Invoice Dashboard') : activeModule}
+          onLogout={handleLogout}
         />
         
         <main className={`flex-1 overflow-y-auto ${(activeModule === 'Invoices' && showCreation) ? 'p-0' : 'p-8'}`}>

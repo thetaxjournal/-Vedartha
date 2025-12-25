@@ -8,9 +8,10 @@ interface HeaderProps {
   activeBranchId: string;
   onBranchChange: (id: string) => void;
   title: string;
+  onLogout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ branches, activeBranchId, onBranchChange, title }) => {
+const Header: React.FC<HeaderProps> = ({ branches, activeBranchId, onBranchChange, title, onLogout }) => {
   const activeBranch = branches.find(b => b.id === activeBranchId);
 
   return (
@@ -48,7 +49,10 @@ const Header: React.FC<HeaderProps> = ({ branches, activeBranchId, onBranchChang
             <span className="absolute -top-1 -right-1 bg-red-500 text-[8px] text-white w-3.5 h-3.5 flex items-center justify-center rounded-full font-bold">3</span>
           </button>
           <div className="h-6 w-[1px] bg-gray-200"></div>
-          <button className="flex items-center space-x-2 text-gray-600 hover:text-red-600 text-xs font-medium transition-colors">
+          <button 
+            onClick={onLogout}
+            className="flex items-center space-x-2 text-gray-600 hover:text-red-600 text-xs font-medium transition-colors"
+          >
             <LogOut size={16} />
             <span>Sign Out</span>
           </button>
