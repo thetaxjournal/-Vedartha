@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,7 +22,6 @@
           margin: 0;
         }
         
-        /* Reset all layout constraints that cause blank pages in ERP dashboards */
         html, body {
           height: auto !important;
           overflow: visible !important;
@@ -29,7 +29,6 @@
           width: 210mm !important;
         }
 
-        /* Hide the main UI completely from the print engine */
         #root, .no-print {
           display: none !important;
           visibility: hidden !important;
@@ -37,7 +36,6 @@
           overflow: hidden !important;
         }
 
-        /* Target the portal specifically */
         #print-portal {
           display: block !important;
           visibility: visible !important;
@@ -48,7 +46,6 @@
           background: white !important;
         }
 
-        /* High-fidelity vector rendering settings */
         * {
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
@@ -56,12 +53,10 @@
         }
       }
 
-      /* Hidden by default on screen */
       #print-portal {
         display: none;
       }
 
-      /* Scrollbar aesthetics */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -92,5 +87,6 @@
     <div id="root"></div>
     <!-- Clean, non-nested root for the print engine to target -->
     <div id="print-portal"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
